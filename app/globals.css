@@ -1,0 +1,392 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   水墨画色彩系统 — 双主题 CSS 变量
+   ============================================================ */
+:root {
+  /* ---- 基调 ---- */
+  --ink-bg: #F5F0E8;
+  --ink-paper: #F5F0E8;
+
+  /* ---- 文字层级 ---- */
+  --ink-title: #2B2B2B;
+  --ink-body: #2B2B2B;
+  --ink-sub: #6B6B6B;
+  --ink-placeholder: #A09888;
+  --ink-muted: rgba(74,44,26,0.42);
+
+  /* ---- 强调 ---- */
+  --ink-red: #C53D2F;
+  --ink-brown: #4A2C1A;
+  --gold: #B8860B;
+
+  /* ---- 卡片 ---- */
+  --ink-card: rgba(255,255,255,0.52);
+  --ink-card-hover: rgba(255,255,255,0.78);
+  --ink-overlay: rgba(245,240,232,0.94);
+
+  /* ---- 输入框 ---- */
+  --ink-input: rgba(255,255,255,0.68);
+  --ink-input-border: rgba(74,44,26,0.16);
+
+  /* ---- 标签 (选中) ---- */
+  --ink-tag-on: #2B2B2B;
+  --ink-tag-on-text: #FFFFFF;
+  --ink-tag-on-ring: #2B2B2B;
+
+  /* ---- 标签 (未选) ---- */
+  --ink-tag-off: rgba(255,255,255,0.72);
+  --ink-tag-off-text: #4A4A4A;
+  --ink-tag-off-border: rgba(74,44,26,0.32);
+
+  /* ---- 标签 hover ---- */
+  --ink-tag-hover: rgba(197,61,47,0.05);
+  --ink-tag-hover-border: rgba(197,61,47,0.5);
+
+  /* ---- 内阴影 / 纸张厚度 ---- */
+  --ink-shadow-inner: inset 0 1px 3px rgba(0,0,0,0.04);
+  --ink-shadow-card: 0 1px 4px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+  --ink-shadow-title: 1px 2px 3px rgba(43,43,43,0.09);
+
+  /* ---- 字体 ---- */
+  --font-display: Georgia, 'SimSun', 'Noto Serif SC', serif;
+  --font-body: 'SimSun', 'Noto Serif SC', Georgia, serif;
+
+  /* ---- 过渡 ---- */
+  --ease-ink: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 0.4s;
+}
+
+/* ============================================================
+   夜墨模式
+   ============================================================ */
+.dark {
+  --ink-bg: #111111;
+  --ink-paper: #1c1c1c;
+
+  --ink-title: #FFFFFF;
+  --ink-body: #E8D5B0;
+  --ink-sub: #B8A88C;
+  --ink-placeholder: #8A7A6A;
+  --ink-muted: rgba(180,170,150,0.42);
+
+  --ink-red: #F0B860;
+  --ink-brown: #D4B068;
+  --gold: #E8D5B0;
+
+  --ink-card: rgba(35,33,30,0.7);
+  --ink-card-hover: rgba(48,45,41,0.84);
+  --ink-overlay: rgba(17,17,17,0.95);
+
+  --ink-input: rgba(40,38,35,0.72);
+  --ink-input-border: rgba(200,180,150,0.16);
+
+  --ink-tag-on: #FFFFFF;
+  --ink-tag-on-text: #1c1c1c;
+  --ink-tag-on-ring: #FFFFFF;
+
+  --ink-tag-off: rgba(40,38,35,0.68);
+  --ink-tag-off-text: #B8A88C;
+  --ink-tag-off-border: rgba(200,180,150,0.28);
+
+  --ink-tag-hover: rgba(240,184,96,0.07);
+  --ink-tag-hover-border: rgba(240,184,96,0.45);
+
+  --ink-shadow-inner: inset 0 1px 2px rgba(255,255,255,0.02);
+  --ink-shadow-card: 0 1px 3px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.08);
+  --ink-shadow-title: 0 1px 4px rgba(255,255,255,0.06);
+}
+
+/* ============================================================
+   基础
+   ============================================================ */
+html {
+  transition: background-color var(--dur) var(--ease-ink);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--ink-bg);
+  color: var(--ink-body);
+  font-family: var(--font-body);
+  transition: background-color var(--dur) var(--ease-ink),
+              color var(--dur) var(--ease-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+input, textarea, button, select, a,
+[class*="bg-ink"], [class*="text-ink"], [class*="border-ink"] {
+  transition: background-color var(--dur) var(--ease-ink),
+              color var(--dur) var(--ease-ink),
+              border-color var(--dur) var(--ease-ink),
+              opacity var(--dur) var(--ease-ink),
+              box-shadow var(--dur) var(--ease-ink);
+}
+
+/* ============================================================
+   宣纸纹理
+   ============================================================ */
+.rice-paper-bg { position: relative; }
+.rice-paper-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(139,115,85,0.01) 2px,rgba(139,115,85,0.01) 3px),
+    radial-gradient(ellipse at 20% 10%, rgba(180,160,130,0.045) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 65%, rgba(160,140,110,0.035) 0%, transparent 50%),
+    radial-gradient(ellipse at 45% 80%, rgba(200,180,150,0.025) 0%, transparent 45%),
+    var(--ink-bg);
+}
+.dark .rice-paper-bg::before {
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(180,160,130,0.006) 2px,rgba(180,160,130,0.006) 3px),
+    radial-gradient(ellipse at 25% 15%, rgba(200,180,150,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 70%, rgba(180,160,130,0.022) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 85%, rgba(200,180,150,0.018) 0%, transparent 45%),
+    var(--ink-bg);
+}
+
+/* ============================================================
+   深色模式文字修正
+   ============================================================ */
+.dark .text-ink-sub\/70 { color: #C4B49F; }
+.dark .text-ink-sub\/50 { color: #C4B49F; opacity: 0.8; }
+.dark .text-ink-brown\/70 { color: #C4A560; }
+.dark ::selection { background-color: rgba(240,184,96,0.3); color: #E8D5B0; }
+
+/* ============================================================
+   书法字体 — 立体淡墨阴影
+   ============================================================ */
+.calligraphy-char {
+  display: inline-block;
+  text-shadow: 1px 1px 3px rgba(43,43,43,0.08),
+               0 2px 4px rgba(43,43,43,0.04);
+  will-change: transform, opacity;
+}
+.dark .calligraphy-char {
+  text-shadow: 0 0 6px rgba(212,184,122,0.1),
+               0 1px 3px rgba(255,255,255,0.04);
+}
+
+/* ============================================================
+   水墨卷轴卡片 — 内阴影模拟纸张厚度
+   ============================================================ */
+.ink-scroll-card {
+  position: relative;
+  background: var(--ink-card);
+  border: 1px solid var(--ink-input-border);
+  border-radius: 16px;
+  box-shadow: var(--ink-shadow-inner), var(--ink-shadow-card);
+}
+.ink-scroll-card::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(74,44,26,0.05);
+  border-radius: 12px;
+  pointer-events: none;
+}
+.dark .ink-scroll-card::before { border-color: rgba(200,180,150,0.05); }
+
+/* ============================================================
+   笔触装饰线
+   ============================================================ */
+.brush-stroke { position: relative; display: inline-block; }
+.brush-stroke::after {
+  content: '';
+  display: block;
+  width: 60%;
+  margin: 0.6rem auto 0;
+  height: 2px;
+  background: linear-gradient(90deg,transparent 0%,rgba(74,44,26,0.2) 20%,rgba(74,44,26,0.33) 50%,rgba(74,44,26,0.2) 80%,transparent 100%);
+  border-radius: 1px;
+}
+.dark .brush-stroke::after {
+  background: linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.16) 20%,rgba(255,255,255,0.28) 50%,rgba(255,255,255,0.16) 80%,transparent 100%);
+}
+
+/* ============================================================
+   水墨晕染按钮
+   ============================================================ */
+.ink-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ink-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(74,44,26,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-ink);
+}
+.ink-btn:hover::after { opacity: 1; }
+
+/* ============================================================
+   标签水墨晕染 hover
+   ============================================================ */
+.tag-ink {
+  transition: all 0.35s var(--ease-ink);
+}
+.tag-ink:hover {
+  background: var(--ink-tag-hover) !important;
+  border-color: var(--ink-tag-hover-border) !important;
+}
+
+/* ============================================================
+   输入框 — 宣纸质感 + 内阴影 + 墨晕 hover
+   ============================================================ */
+.ink-field {
+  background: var(--ink-input);
+  border: 1px solid var(--ink-input-border);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.025),
+              0 1px 2px rgba(0,0,0,0.02);
+  transition: box-shadow 0.5s var(--ease-ink),
+              border-color 0.5s var(--ease-ink),
+              background 0.4s var(--ease-ink);
+}
+.ink-field::placeholder { color: var(--ink-placeholder); transition: color var(--dur) var(--ease-ink); }
+.ink-field:hover {
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.04),
+              0 1px 3px rgba(0,0,0,0.03),
+              0 0 0 4px rgba(74,44,26,0.03);
+}
+.ink-field:focus {
+  outline: none;
+  border-color: var(--ink-brown);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.02),
+              0 0 0 4px rgba(74,44,26,0.06),
+              0 2px 8px rgba(0,0,0,0.04);
+}
+.dark .ink-field:hover {
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.02),
+              0 0 0 4px rgba(200,180,150,0.03);
+}
+.dark .ink-field:focus {
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.01),
+              0 0 0 4px rgba(200,180,150,0.06);
+}
+
+/* ============================================================
+   诗体选中按钮 — 墨渍渐变
+   ============================================================ */
+.ink-poem-sel {
+  position: relative;
+}
+.ink-poem-sel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.dark .ink-poem-sel::after {
+  background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+
+/* ============================================================
+   印章 — 轻微浮起层次
+   ============================================================ */
+.seal-stamp {
+  background-color: var(--ink-red);
+  color: #fff;
+  transform: rotate(-3deg);
+  font-family: var(--font-display);
+  border-radius: 3px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.1),
+              0 4px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.4s var(--ease-ink), transform 0.4s var(--ease-ink);
+}
+.seal-stamp:hover {
+  box-shadow: 1px 3px 6px rgba(0,0,0,0.14),
+              0 6px 12px rgba(0,0,0,0.06);
+  transform: rotate(-2deg);
+}
+.dark .seal-stamp { color: #1c1c1c; }
+
+/* ============================================================
+   日月切换按钮 — 宣纸浮雕 + 扩散动画
+   ============================================================ */
+.theme-toggle-btn {
+  position: relative;
+  transition: transform 0.3s var(--ease-ink),
+              box-shadow 0.3s var(--ease-ink),
+              background 0.4s var(--ease-ink);
+  box-shadow: var(--ink-shadow-inner), var(--ink-shadow-card);
+}
+.theme-toggle-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,44,26,0.04) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s var(--ease-ink), transform 0.4s var(--ease-ink);
+  z-index: -1;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: var(--ink-shadow-inner), 0 2px 10px rgba(0,0,0,0.06);
+}
+.theme-toggle-btn:hover::after {
+  opacity: 1;
+  transform: scale(1.3);
+}
+.dark .theme-toggle-btn::after {
+  background: radial-gradient(circle, rgba(200,180,150,0.06) 0%, transparent 70%);
+}
+
+/* ============================================================
+   元素淡入浮现
+   ============================================================ */
+@keyframes ink-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ink-rise {
+  animation: ink-rise 0.6s var(--ease-ink) both;
+}
+.ink-rise-delay-1 { animation-delay: 0.1s; }
+.ink-rise-delay-2 { animation-delay: 0.2s; }
+.ink-rise-delay-3 { animation-delay: 0.3s; }
+
+/* ============================================================
+   滚动条 / 图片占位 / 焦点环
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ink-sub); border-radius: 3px; }
+
+.img-placeholder {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg,rgba(43,43,43,0.02) 0%,rgba(43,43,43,0.045) 50%,rgba(43,43,43,0.02) 100%);
+  animation: shimmer 2s var(--ease-ink) infinite;
+}
+@keyframes shimmer {
+  0%,100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--ink-brown);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   移动端
+   ============================================================ */
+@media (max-width: 640px) {
+  :root { --dur: 0.3s; }
+  .ink-rise { animation-duration: 0.45s; }
+}

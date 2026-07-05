@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app\\\\generate\\\\page.tsx -> @/components/LoadingInk":{"id":8847,"files":["static/chunks/847.59a699eed871f7d9.js"]}}';
