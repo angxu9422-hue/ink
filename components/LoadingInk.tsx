@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 
-type InkStage = 'ink' | 'brush' | 'seal'
+export type InkStage = 'ink' | 'brush' | 'seal'
 
 interface LoadingInkProps {
   stage?: InkStage
